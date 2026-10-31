@@ -1,4 +1,4 @@
-# Sphishing-
+# Sphishing
 
 # 📍 Facebook landing page.
 
