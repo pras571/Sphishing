@@ -11,4 +11,9 @@ Change the code on line 486, replace it with your own FormSpark API key, host th
 Your FormSpark dashboard, where you can view users' submitted credentials.
 
 
+![image alt](https://github.com/pras571/Sphishing-/blob/be53d7b8521f10f05d49079b0ec221c350122d75/IMG_20261031_222729_358.jpg)
+Phishing page.
+
 # 🤖 Don't change anything else. Just modify one line and use an easy-to-use tool.
+# 🧷s=smart
+#  phishing=phishing.
