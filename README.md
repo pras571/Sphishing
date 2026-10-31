@@ -15,5 +15,8 @@ Your FormSpark dashboard, where you can view users' submitted credentials.
 Phishing page.
 
 # 🤖 Don't change anything else. Just modify one line and use an easy-to-use tool.
-# 🧷s=smart
+
+
+#  s=smart
 #  phishing=phishing.
+# 🎣 Smart Phishing 
